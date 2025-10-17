@@ -1,0 +1,173 @@
+openapi: 3.0.2
+info:
+  title: Heroes API
+  version: 1.0.0
+  description: A simple Heroes API for managing Dota 2 heroes
+paths:
+  /heroes:
+    get:
+      tags:
+        - heroes
+      summary: Get a list of all heroes
+      description: Returns a list of all heroes in the database
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/hero'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    post:
+      tags:
+        - heroes
+      summary: Add a new hero
+      description: Adds a new hero to the database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/new-hero'
+            example:
+              name: Juggernaut
+              attribute: Agility
+      responses:
+        '201':
+          description: Hero created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hero'
+              example:
+                id: 13
+                name: Juggernaut
+                attribute: Agility
+        '400':
+          description: Missing or invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              example:
+                error: One or all params are missing
+        '409':
+          description: Hero already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              example:
+                error: Hero already exists
+  /heroes/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Hero ID
+        schema:
+          type: integer
+          example: 1
+    get:
+      tags:
+        - heroes
+      summary: Get full details of a hero
+      description: Returns full details of a hero by its ID
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hero'
+              example:
+                id: 1
+                name: Shadow Fiend
+                attribute: Agility
+        '404':
+          description: Hero not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              example:
+                error: Hero not found
+    delete:
+      tags:
+        - heroes
+      summary: Delete a hero
+      description: Deletes a hero by ID
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Id is required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              example:
+                error: Id is required
+        '404':
+          description: Hero not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              example:
+                error: Hero not found
+        '409':
+          description: Cannot delete this hero
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              example:
+                error: You cannot delete this
+components:
+  schemas:
+    hero:
+      type: object
+      required:
+        - id
+        - name
+        - attribute
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        attribute:
+          type: string
+          enum:
+            - Strength
+            - Agility
+            - Intelligence
+            - Universal
+    new-hero:
+      type: object
+      required:
+        - name
+        - attribute
+      properties:
+        name:
+          type: string
+        attribute:
+          type: string
+          enum:
+            - Strength
+            - Agility
+            - Intelligence
+            - Universal
+    error:
+      type: object
+      properties:
+        error:
+          type: string
