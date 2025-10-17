@@ -9,6 +9,10 @@ const app = express();
 const port = 8080;
 
 app.use(express.json());
+const cors = require("cors");
+app.use(cors());
+app.use(express.static('public'));
+
 
 const swaggerDocument = yamljs.load('./docs/swagger.yaml');
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
