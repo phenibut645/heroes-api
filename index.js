@@ -1,11 +1,36 @@
 <<<<<<< Updated upstream
 const app = require("express")();
 const port = 8080;
+const express = require("express");
+app.use(express.json());
 const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("./docs/swagger.json");
+const yamljs = require("yamljs");
+const swaggerDocument = yamljs.load('./docs/swagger.yaml');
+
+const attributes = {
+    "STRENGTH": "Strength",
+    "AGILITY": "Agility",
+    "INTELLIGENCE": "Intelligence",
+    "UNIVERSAL": "Universal"
+}
+
+const heroes = [
+    {id: 1, name: "Shadow Fiend", attribute: attributes.AGILITY},
+    {id: 2, name: "Terrorblade", attribute: attributes.AGILITY},
+    {id: 3, name: "Spectre", attribute: attributes.UNIVERSAL},
+    {id: 4, name: "Skywrath Mage", attribute: attributes.INTELLIGENCE},
+    {id: 5, name: "Wraith King", attribute: attributes.STRENGTH},
+    {id: 6, name: "Axe", attribute: attributes.STRENGTH},
+    {id: 7, name: "Earthshaker", attribute: attributes.STRENGTH},
+    {id: 8, name: "Marci", attribute: attributes.UNIVERSAL},
+    {id: 9, name: "Medusa", attribute: attributes.AGILITY},
+    {id: 10, name: "Queen Of Pain", attribute: attributes.INTELLIGENCE},
+    {id: 11, name: "Puck", attribute: attributes.INTELLIGENCE},
+    {id: 12, name: "Arc Warden", attribute: attributes.UNIVERSAL}
+]
 
 app.get("/heroes", (req, res) => {
-    res.send(["Shadow Fiend", "Spectre", "Earthshaker", "Tinker", "Broodmother", "Lone Druid", "Wraith King", "Anti Mage", "Phantom Assasin", "Phantom Lancer", "Sand King", "Queen Of Pain", "Ogre Magi", "Axe", "Chaos Knight", "Terrorblade", "Oracle", "Puck"])
+    res.send(heroes)
 })
 =======
 require('dotenv').config();
@@ -45,6 +70,10 @@ app.get("/heroes", async (req, res) => {
 app.listen(port, () => {
     console.log(`API up at: http://localhost:${port}`)
 })
+
+function getBaseUrl(req){
+    return req.connection && req.connection.encrypted ? "https" : "http" + `://${req.headers.host}`
+}
 =======
 app.get("/heroes/:id", async (req, res) => {
     try {
