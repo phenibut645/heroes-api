@@ -49,9 +49,20 @@ app.get("/heroes/:id", (req, res) => {
 })
 
 app.delete("/heroes/:id", (req, res) => {
+    if(!req.body.id) {
+        return res.status(400).send({
+            "error": "Id is required"
+        })
+    }
     if(typeof heroes[req.params.id - 1] === "undefined"){
         return res.status(404).send({"error": "Hero not found"});
     }
+    if(heroes[req.params.id - 1].name === "Shadow Fiend"){
+        return res.status(409).send({
+            "error": "You cannot delete this"
+        })
+    }
+
     heroes.splice(req.params.id - 1, 1);
     res.status(204).send({error: "No content"});
 })
