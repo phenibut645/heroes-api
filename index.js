@@ -1,38 +1,3 @@
-<<<<<<< Updated upstream
-const app = require("express")();
-const port = 8080;
-const express = require("express");
-app.use(express.json());
-const swaggerUi = require("swagger-ui-express");
-const yamljs = require("yamljs");
-const swaggerDocument = yamljs.load('./docs/swagger.yaml');
-
-const attributes = {
-    "STRENGTH": "Strength",
-    "AGILITY": "Agility",
-    "INTELLIGENCE": "Intelligence",
-    "UNIVERSAL": "Universal"
-}
-
-const heroes = [
-    {id: 1, name: "Shadow Fiend", attribute: attributes.AGILITY},
-    {id: 2, name: "Terrorblade", attribute: attributes.AGILITY},
-    {id: 3, name: "Spectre", attribute: attributes.UNIVERSAL},
-    {id: 4, name: "Skywrath Mage", attribute: attributes.INTELLIGENCE},
-    {id: 5, name: "Wraith King", attribute: attributes.STRENGTH},
-    {id: 6, name: "Axe", attribute: attributes.STRENGTH},
-    {id: 7, name: "Earthshaker", attribute: attributes.STRENGTH},
-    {id: 8, name: "Marci", attribute: attributes.UNIVERSAL},
-    {id: 9, name: "Medusa", attribute: attributes.AGILITY},
-    {id: 10, name: "Queen Of Pain", attribute: attributes.INTELLIGENCE},
-    {id: 11, name: "Puck", attribute: attributes.INTELLIGENCE},
-    {id: 12, name: "Arc Warden", attribute: attributes.UNIVERSAL}
-]
-
-app.get("/heroes", (req, res) => {
-    res.send(heroes)
-})
-=======
 require('dotenv').config();
 
 const express = require("express");
@@ -50,12 +15,11 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const attributes = ["Strength", "Agility", "Intelligence", "Universal"];
 
-const uri = process.env.MONGO_URI;
+const uri = process.env.MONGODB_URI;
 mongoose.connect(uri)
     .then(() => console.log('Connected to MongoDB Atlas'))
     .catch(err => console.error('MongoDB connection error:', err));
 
->>>>>>> Stashed changes
 
 app.get("/heroes", async (req, res) => {
     try {
@@ -66,15 +30,6 @@ app.get("/heroes", async (req, res) => {
     }
 });
 
-<<<<<<< Updated upstream
-app.listen(port, () => {
-    console.log(`API up at: http://localhost:${port}`)
-})
-
-function getBaseUrl(req){
-    return req.connection && req.connection.encrypted ? "https" : "http" + `://${req.headers.host}`
-}
-=======
 app.get("/heroes/:id", async (req, res) => {
     try {
         const hero = await Hero.findOne({ id: parseInt(req.params.id) });
@@ -150,4 +105,3 @@ app.delete("/heroes/:id", async (req, res) => {
 app.listen(port, () => {
     console.log(`API up at: http://localhost:${port}`);
 });
->>>>>>> Stashed changes

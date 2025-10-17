@@ -18,14 +18,9 @@
   "homepage": "https://github.com/phenibut645/heroes-api#readme",
   "description": "",
   "dependencies": {
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
-<<<<<<< Updated upstream
-    "swagger-ui-express": "^5.0.1"
-=======
     "mongoose": "^8.19.1",
-    "swagger-ui-express": "^5.0.1",
-    "yamljs": "^0.3.0"
->>>>>>> Stashed changes
     "swagger-ui-express": "^5.0.1",
     "yamljs": "^0.3.0"
   }
