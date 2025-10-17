@@ -1,0 +1,121 @@
+openapi: 3.0.2
+info:
+    title: Heroes API
+    version: 1.0.0
+    description: A brand new API with no content.  Go nuts!
+paths:
+    /heroes:
+        description: This is Swagger UI for our Heroes API
+        get:
+            tags:
+                - games
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                List of Heroes:
+                                    value:
+                                        - Shadow Fiend
+                                        - Spectre
+                                        - Earthshaker
+                                        - Tinker
+                                        - Broodmother
+                                        - Lone Druid
+                                        - Wraith King
+                                        - Anti Mage
+                                        - Phantom Assasin
+                                        - Phantom Lancer
+                                        - Sand King
+                                        - Queen Of Pain
+                                        - Ogre Magi
+                                        - Axe
+                                        - Chaos Knight
+                                        - Terrorblade
+                                        - Oracle
+                                        - Puck
+                    description: application/json
+            summary: Get a list of all games
+            description: Returns a list of all games in API
+    '/heroes/{id}':
+        get:
+            tags:
+                - details
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Full details of a given id hero:
+                                    value: |-
+                                        [
+                                            {id: 1, name: "Shadow Fiend", attribute: attributes.AGILITY},
+                                            {id: 2, name: "Terrorblade", attribute: attributes.AGILITY},
+                                            {id: 3, name: "Spectre", attribute: attributes.UNIVERSAL},
+                                            {id: 4, name: "Skywrath Mage", attribute: attributes.INTELLIGENCE},
+                                            {id: 5, name: "Wraith King", attribute: attributes.STRENGTH},
+                                            {id: 6, name: "Axe", attribute: attributes.STRENGTH},
+                                            {id: 7, name: "Earthshaker", attribute: attributes.STRENGTH},
+                                            {id: 8, name: "Marci", attribute: attributes.UNIVERSAL},
+                                            {id: 9, name: "Medusa", attribute: attributes.AGILITY},
+                                            {id: 10, name: "Queen Of Pain", attribute: attributes.INTELLIGENCE},
+                                            {id: 11, name: "Puck", attribute: attributes.INTELLIGENCE},
+                                            {id: 12, name: "Arc Warden", attribute: attributes.UNIVERSAL}
+                                        ]
+                    description: Returns full details of a given id hero
+                '404':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+                            examples:
+                                Example:
+                                    value:
+                                        error: Error message
+                    description: application/json
+            operationId: id
+            summary: Get full details of a game
+            description: Returns full details of a given id game
+components:
+    schemas:
+        error:
+            title: Root Type for error
+            description: ''
+            type: object
+            properties:
+                error:
+                    type: string
+            example:
+                error: Error message
+        new-hero:
+            title: Root Type for new-hero
+            description: ''
+            required:
+                - attribute
+                - name
+            type: object
+            properties:
+                name:
+                    description: Name
+                    type: string
+                attribute:
+                    description: |-
+                        Hero attributes:
+                        "STRENGTH"
+                        "AGILITY"
+                        "INTELLIGENCE"
+                        "UNIVERSAL"
+                    type: string
+            example:
+                name: Juggernaut
+                attribute: Agility
