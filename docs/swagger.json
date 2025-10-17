@@ -3,7 +3,7 @@
     "info": {
         "title": "Heroes API",
         "version": "1.0.0",
-        "description": "A brand new API with no content.  Go nuts!"
+        "description": "A brand new API with no content."
     },
     "paths": {
         "/heroes": {
