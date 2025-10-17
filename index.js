@@ -58,13 +58,25 @@ app.delete("/heroes/:id", (req, res) => {
 
 app.post("/heroes", (req, res) => {
     if(!req.body.attribute || !req.body.name){
-        return res.status(400).send({"erorr": "One or all params are missing"})
+        return res.status(400).send({"error": "One or all params are missing"})
+    }
+    if(heroes.find(hero => {
+        hero.name === req.body.name
+    })){
+        return res.status(409).send({
+            "error": "The same name already exists"
+        })
+    }
+    if(req.headers["content-type"] !== "application/json"){
+        return res.status(415).send({
+            "error": "Invalid content-type"
+        })
     }
     const hero = {
-                id: heroes.length + 1,
-                price: req.body.attribute,
-                name: req.body.name
-            }
+        id: heroes.length + 1,
+        price: req.body.attribute,
+        name: req.body.name
+    }
     if(Object.values(attributes).find(attribute => attribute === req.body.attribute)) {
         heroes.push(hero)
         res.status(201).location(`${getBaseUrl(req)}/heroes/${heroes.length}`).send(hero);
